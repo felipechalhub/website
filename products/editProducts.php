@@ -106,30 +106,15 @@ else{
                     <input type="text" class="form-control" name="product_price" value="<?php echo $product_price;?>">
                 </div>
             </div>
-            <div class="col-mb-3">
+            <div class="row-mb-3">
                 <label class="col-sm-3 col-form-label">Quantity</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="product_quantity" value="<?php echo $product_quantity;?>">
                 </div>
             </div>
-
-            <?php
-                if(!empty($successMessage)){
-                    echo "
-                    <div class = 'row mb-3>
-                        <div> class= 'offset-sm-3 col-sm-6'
-                            <div class = 'alert alert-success alert-dismissible fade show' role= 'alert'>
-                                <strong>$successMessage</strong>
-                                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Back to the page'>Back to the page></button>
-                            </div>
-                        </div>
-                    </div>                    
-                    ";
-                }
-            ?>
-
+            <br>
             <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3 d-grid">
+                <div class="col-sm-3 d-grid">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-sm-3 d-grid">

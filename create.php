@@ -44,8 +44,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $address = "";
 
         $successMessage = "Client added correctly";
-        header("location: /website/index.php");
-        exit;
+        //header("location: /website/index.php");
+        //exit;
     } while(false);
 
 }
@@ -58,8 +58,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
     <div class="container my-5">
         <h2>New Client</h2>
@@ -93,36 +93,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <input type="text" class="form-control" name="email" value="<?php echo $email;?>">
                 </div>
             </div>
-            <div class="col-mb-3">
+            <div class="row-mb-3">
                 <label class="col-sm-3 col-form-label">Phone</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="phone" value="<?php echo $phone;?>">
                 </div>
             </div>
-            <div class="col-mb-3">
+            <div class="row-mb-3">
                 <label class="col-sm-3 col-form-label">Address</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="address" value="<?php echo $address;?>">
                 </div>
             </div>
-
-            <?php
-                if(!empty($successMessage)){
-                    echo "
-                    <div class = 'row mb-3>
-                        <div> class= 'offset-sm-3 col-sm-6'
-                            <div class = 'alert alert-success alert-dismissible fade show' role= 'alert'>
-                                <strong>$successMessage</strong>
-                                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Back to the page'>Back to the page></button>
-                            </div>
-                        </div>
-                    </div>                    
-                    ";
-                }
-            ?>
-
+            <br>
             <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3 d-grid">
+                <div class="col-sm-3 d-grid">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-sm-3 d-grid">

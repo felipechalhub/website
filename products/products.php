@@ -24,12 +24,15 @@
                     <td>Description</td>
                     <td>Price</td>
                     <td>Quantity</td>
+                    <td>Image</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
             </thead>
             <tbody>
                 <?php
+                    // include 'createProducts.php';
                     $servername = 'localhost';
                     $username = 'root';
                     $password = '';
@@ -41,25 +44,31 @@
                     }
                     $sql = "SELECT * FROM products";
                     $result = $conn->query($sql);
-
-                    if(!$result){
-                        die("Invalid query: " . $conn->error);
+                    if($result ->num_rows >0){
+                    while($row = $result->fetch_assoc()){
+                        ?>
+                        <tr>
+                            <td><?php echo $row['product_id']; ?></td>
+                            <td><?php echo $row['product_name']; ?></td>
+                            <td><?php echo $row['product_description']; ?></td>
+                            <td><?php echo $row['product_price']; ?></td>
+                            <td><?php echo $row['product_quantity']; ?></td>
+                            <td>
+                                <?php if($row['images'] > 0){ ?>
+                                <img src="data:image/png;charset=utf-8;base64, <?php echo base64_encode($row['images']); ?>" width="100" height="100">
+                                <?php }?>
+                            </td>
+                        <td><a class="btn btn-warning btn-sm" href="/website/cart.php?id=<?php echo $row['product_id']; ?>" >Add to Cart </a></td>
+                        <td><a class="btn btn-primary btn-sm" href="/website/products/editProducts.php?id=<?php echo $row['product_id']; ?>">Edit</a></td>
+                        <td><a class="btn btn-danger btn-sm" href="/website/products/deleteProducts.php?id=<?php echo $row["product_id"]; ?>">Delete</a></td>                             
+                        </tr>       
+                    <?php
                     }
-                    
-                    while($row = $result->fetch_assoc()){                
-                echo "<tr>
-                        <td>".$row["product_id"]."</td>
-                        <td>".$row["product_name"]."</td>
-                        <td>".$row["product_description"]."</td>
-                        <td>".$row["product_price"]."</td>
-                        <td>".$row["product_quantity"]."</td>
-                        <td><a class='btn btn-primary btn-sm' href='/website/products/editProducts.php?id=$row[product_id]'>Edit</a></td>
-                        <td><a class='btn btn-danger btn-sm' href='/website/products/deleteProducts.php?id=$row[product_id]'>Delete</a></td>
-                    </tr>";
                 }
-                ?>
+                    ?>                
             </tbody>
         </table>
     </div>
 </body>
 </html>
+

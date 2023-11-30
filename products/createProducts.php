@@ -4,7 +4,7 @@
     $password = '';
     $database = 'website';
 
-    $conn = new mysqli($servername, $username, $password, $database);
+     $conn = new mysqli($servername, $username, $password, $database);
 
     $id = "";
     $product_name = "";
@@ -20,15 +20,42 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $product_description = $_POST["product_description"];
     $product_price = $_POST["product_price"];
     $product_quantity = $_POST["product_quantity"];
+    // $product_image = $_POST["images"];
 
 
     do{
-        if(empty($product_name) || empty($product_description) || empty($product_price) || empty($product_quantity)){
+        if(empty($product_name) || empty($product_description) || empty($product_price) || empty($product_quantity) ){
             $errorMessage = "All the fields are required";
             break;
         }
-        $sql = "INSERT INTO products (product_name, product_description, product_price, product_quantity) " .
-                "VALUES ('$product_name', '$product_description', '$product_price', '$product_quantity')";
+        if($_FILES["image"]["error"] === 4){
+            echo
+            "<script>alert('Image Does Not Exist'); </script>";
+        }
+        else{
+            $fileName = $_FILES["image"]["name"];
+            $fileSize = $_FILES["image"]["size"];
+            $tpmName = $_FILES["image"]["tpm_name"];
+
+            $validImageExtension = ['jpg','jpeg','png'];
+            // $imageExtension = explode ('.', $fileName);
+            // $imageExtension = strtolower(end($imageExtension));
+            if(!in_array($imageExtension, $validImageExtension)){
+                echo
+                "<script> alert('Invalid Image Extension');</script>";
+            }
+            else if($fileSize> 1000000){
+                echo
+                "<script> alert('Image Size Is Too Large');</script>";
+            }
+                $newImageName = uniqid() . "-" . $fileName;
+
+                move_uploaded_file($tpmName, 'uploads/' . $newImageName);
+        
+
+        }
+        $sql = "INSERT INTO products (product_name, product_description, product_price, product_quantity, images) " .
+                "VALUES ('$product_name', '$product_description', '$product_price', '$product_quantity', '$newImageName')";
         $result = $conn->query($sql);
 
         if(!$result){
@@ -92,30 +119,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <input type="text" class="form-control" name="product_price" value="<?php echo $product_price;?>">
                 </div>
             </div>
-            <div class="col-mb-3">
+            <div class="row-mb-3">
                 <label class="col-sm-3 col-form-label">Quantity</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="product_quantity" value="<?php echo $product_quantity;?>">
                 </div>
             </div>
-
-            <?php
-                if(!empty($successMessage)){
-                    echo "
-                    <div class = 'row mb-3>
-                        <div> class= 'offset-sm-3 col-sm-6'
-                            <div class = 'alert alert-success alert-dismissible fade show' role= 'alert'>
-                                <strong>$successMessage</strong>
-                                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Back to the page'>Back to the page></button>
-                            </div>
-                        </div>
-                    </div>                    
-                    ";
-                }
-            ?>
-
-            <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3 d-grid">
+            <div class="row-mb-3">
+                <label class="col-sm-3 col-form-label">Image</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png" value="">
+                </div>
+            </div>
+            <br>
+            <div class="row mb-3" >
+                <div class="col-sm-3 d-grid">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-sm-3 d-grid">
